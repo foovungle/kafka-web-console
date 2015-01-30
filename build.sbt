@@ -5,6 +5,7 @@ version := "2.1.0-SNAPSHOT"
 libraryDependencies ++= Seq(
   jdbc,
   cache,
+  "mysql" % "mysql-connector-java" % "5.1.18",
   "org.squeryl" % "squeryl_2.10" % "0.9.5-6",
   "com.twitter" % "util-zk_2.10" % "6.11.0",
   "com.twitter" % "finagle-core_2.10" % "6.15.0",
