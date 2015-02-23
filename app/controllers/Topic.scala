@@ -167,8 +167,8 @@ object Topic extends Controller {
                               owners: Seq[(String, Int, String)]): Seq[Map[String, Object]] = {
 
     consumersAndPartitionOffsets.map { cPO =>
-      val offsetSum = cPO._2.map(_.toInt).foldLeft(0)(_ + _)
-      val partitionsLogSizeSum = partitionsLogSize.foldLeft(0.0)(_ + _).toInt
+      val offsetSum = cPO._2.map(_.toLong).foldLeft(0L)(_ + _)
+      val partitionsLogSizeSum = partitionsLogSize.foldLeft(0.0)(_ + _).toLong
 
       Map("consumerGroup" -> cPO._1,
           "offset" -> offsetSum.toString,
@@ -183,7 +183,7 @@ object Topic extends Controller {
         partitionLeaders <- getPartitionLeaders(e("name").toString, zkClient)
         partitionsLogSize <- getPartitionsLogSize(e("name").toString, partitionLeaders)
         partitions = partitionsLogSize.zipWithIndex.map(pls => Map("id" -> pls._2.toString, "logSize" -> pls._1.toString, "leader" -> partitionLeaders(pls._2)))
-        logSizeSum = partitionsLogSize.foldLeft(0.0)(_ + _).toInt.toString
+        logSizeSum = partitionsLogSize.foldLeft(0.0)(_ + _).toLong.toString
       } yield Map("name" -> e("name"), "partitions" -> partitions, "zookeeper" -> e("zookeeper"), "logSize" -> logSizeSum)
 
     })
